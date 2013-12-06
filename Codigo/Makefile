@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -Wall -DEXERCISE_FINISHING 
 ##CFLAGS = -Wall -DEXERCISE_FINISHING  -DSYNCH_SIGNAL
 
-LDFLAGS = -lpthread
+LDFLAGS = -lpthread -pthread
 
 TARGET = practica
 

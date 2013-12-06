@@ -122,9 +122,19 @@ int create_client(sys_mbox_t* mbox, enum _message_types_ m_type, int n_messages,
 	argument = (struct client_arg*) malloc(sizeof(struct client_arg));
 	
 	// INICIALIZA AQUI LOS CAMPOS DE argument
-
+	 argument = (struct client_arg*) malloc(sizeof(struct client_arg));
+        argument->m_type = m_type;
+        argument->n_messages = n_messages;
+        argument->period = period;
+        argument->mbox = mbox;
 	
 	// CREACION DE HILO (CON COMPROBACION DE ERRORES)
+	
+	 if ( pthread_create(&tmp,NULL, client_thread,(void *) argument) != 0) {
+                fprintf(stderr,"Error when creating client thread\n");
+                return -1;
+        }
+        
 	// EL IDENTIFICADOR DE HILO SE DEBE ALMACENAR EN LA VARIABLE tmp
 
 

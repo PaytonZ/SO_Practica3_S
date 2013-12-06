@@ -119,8 +119,31 @@ mbox_post( struct sys_mbox *mbox, void *msg)
 void*
 mbox_fetch(struct sys_mbox *mbox)
 {
-printf("ATENCION funcion mbox_fetch NO implementada\n");
-return NULL;	
+   pthread_mutex_lock(mbox->mutex);
+
+
+        while(is_empty_cbuffer_t(mbox->cbuffer)) {
+                
+
+               var_cond_wait(mbox->hayElem,mbox->mutex);
+
+        }
+
+
+
+        void *msg = head_cbuffer_t(mbox->cbuffer);
+        remove_cbuffer_t(mbox->cbuffer);
+
+        //if (mbox->wait_send > 0) {
+
+                var_cond_signal(mbox->hayHueco);
+        //}
+
+        pthread_mutex_unlock(mbox->mutex);
+
+ return msg;
+  
+  
 }
 
 
